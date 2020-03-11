@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/2019Genap-PBKK-F/tugas2-yogamahottama/issues"
   },
-  "homepage": "https://github.com/2019Genap-PBKK-F/tugas2-yogamahottama#readme"
+  "homepage": "https://github.com/2019Genap-PBKK-F/tugas2-yogamahottama#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mssql": "^6.1.0"
+  }
 }
