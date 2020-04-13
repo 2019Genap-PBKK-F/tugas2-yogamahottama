@@ -3,8 +3,8 @@ var app = express();
 var sql = require('mssql');
 //Load HTTP module
 const http = require("http");
-//const hostname = '10.199.14.46';
-const hostname = 'localhost';
+const hostname = '10.199.14.46';
+//const hostname = 'localhost';
 const port = 8028;
 
 //CORS Middleware
@@ -240,6 +240,6 @@ app.delete("/api/Capaian_Unit/:DataDasar_id&Unit_id", function(req, res)
   executeQuery(res, query, null, 0);
 })
 
-app.listen(port, hostname, () => {
+app.listen(port, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
