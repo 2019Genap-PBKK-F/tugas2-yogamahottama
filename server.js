@@ -55,7 +55,8 @@ var executeQuery = function(res, query, param, reqType) {
 //get
 app.get("/",function(req, res)
 {
-  res.end('Juggernaaaaaaaaut!');
+  // res.end('makan bang');
+  res.sendFile(__dirname + '/index.html')
 });
 
 app.get("/api/mahasiswa", function(req, res)
