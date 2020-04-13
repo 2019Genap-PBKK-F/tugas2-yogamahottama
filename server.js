@@ -100,7 +100,7 @@ app.post("/api/mahasiswa", function(req, res)
     { name: 'foto', sqltype: sql.VarChar, value: req.body.foto },
     { name: 'aktif', sqltype: sql.Bit, value: req.body.aktif}
   ]
-  var query = 'insert into mahasiswa ( nrp, nama, angkatan, jk, tgl, foto, aktif ) values( @nrp, @nama, @angkatan, @jk, @tgl, @foto, @aktif)';
+  var query = 'insert into mahasiswa ( nrp, nama, angkatan, jk, tgl, foto, aktif ) values ( @nrp, @nama, @angkatan, @jk, @tgl, @foto, @aktif)';
   executeQuery(res, query, param, 1)
 })
 
@@ -127,11 +127,11 @@ app.post("/api/KategoriUnit", function(req,res)
 app.post("/api/Unit", function(req,res)
 {
   var param = [
-    { name: 'KategoriUnit_id', sqltype: sql.VarChar, value: req.body.KategoriUnit_id },
-    { name: 'nama', sqltype: sql.VarChar, value: req.body.nama }
+    { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
+    { name: 'KategoriUnit_id', sqltype: sql.VarChar, value: req.body.KategoriUnit_id }
   ]
 
-  var query = 'insert into Unit ( KategoriUnit_id, nama ) values ( @KategoriUnit_id, @nama )';
+  var query = 'insert into Unit ( nama, KategoriUnit_id ) values ( @nama, @KategoriUnit_id )';
   executeQuery(res, query, param, 1)
 })
 
@@ -188,12 +188,12 @@ app.put('/api/KategoriUnit/:id',function(req,res){
 
 app.put('/api/Unit/:id',function(req,res){
   var param = [
-    { name: 'id', sqltype: sql.Int, value: req.body.id }, 
-    { name: 'KategoriUnit_id', sqltype: sql.Int, value: req.body.KategoriUnit_id },
-    { name: 'nama', sqltype: sql.VarChar, value: req.body.nama }
+    { name: 'id', sqltype: sql.Int, value: req.body.id },
+    { name: 'nama', sqltype: sql.VarChar, value: req.body.nama }, 
+    { name: 'KategoriUnit_id', sqltype: sql.Int, value: req.body.KategoriUnit_id }
   ]
 
-  var query = "update Unit set KategoriUnit_id = @KategoriUnit_id, nama = @nama WHERE id =" + req.params.id;
+  var query = "update Unit set nama = @nama, KategoriUnit_id = @KategoriUnit_id WHERE id =" + req.params.id;
   executeQuery(res,query, param, 1);
 });
 
