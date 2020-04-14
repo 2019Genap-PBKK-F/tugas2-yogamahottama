@@ -83,10 +83,16 @@ app.get("/api/DataDasar/:id",function(req, res)
     executeQuery(res, query, null, 0);
 });
 
-app.get("/api/KategoriUnit", function(req, res)
+app.get("/api/KategoriUnit/", function(req, res)
 {
-  var query = "select * from KategoriUnit";
-  executeQuery(res, query, null, 0);
+    var query = "select id,nama as name from KategoriUnit"
+    executeQuery(res, query, null, 0);
+});
+
+app.get("/api/KategoriUnit/:id", function(req, res)
+{
+    var query = "select * from KategoriUnit where id=" + req.params.id;
+    executeQuery(res, query, null, 0);
 });
 
 app.get("/api/Unit", function(req, res)
@@ -128,14 +134,13 @@ app.post("/api/DataDasar", function(req,res)
   executeQuery(res, query, param, 1)
 })
 
-app.post("/api/KategoriUnit", function(req,res)
+app.post("/api/KategoriUnit/", function( req, res)
 {
-  var param = [
+  var model = [
     { name: 'nama', sqltype: sql.VarChar, value: req.body.nama }
   ]
-
-  var query = 'insert into KategoriUnit ( nama ) values ( @nama )';
-  executeQuery(res, query, param, 1)
+  var query = 'insert into KategoriUnit( nama ) values( @nama )';
+  executeQuery(res, query, model, 1)
 })
 
 app.post("/api/Unit", function(req,res)
@@ -190,15 +195,14 @@ app.put('/api/DataDasar/:id',function(req,res){
   executeQuery(res,query, param, 1);
 });
 
-app.put('/api/KategoriUnit/:id',function(req,res){
-  var param = [
-    { name: 'id', sqltype: sql.Int, value: req.body.id }, 
+app.post("/api/KategoriUnit/:id", function( req, res)
+{
+  var model = [
     { name: 'nama', sqltype: sql.VarChar, value: req.body.nama }
   ]
-
-  var query = "update KategoriUnit set nama = @nama WHERE id =" + req.params.id;
-  executeQuery(res,query, param, 1);
-});
+  var query = 'update KategoriUnit set nama = @nama where id=' + req.params.id;
+  executeQuery(res, query, model, 1)
+})
 
 app.put('/api/Unit/:id',function(req,res){
   var param = [
