@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/2019Genap-PBKK-F/tugas2-yogamahottama#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mssql": "^6.1.0"
   }
