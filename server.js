@@ -225,7 +225,7 @@ app.delete("/api/Capaian_Unit/:DataDasar_id&Unit_id", function(req, res)
   executeQuery(res, query, null, 0);
 })
 
-app.listen(port, hostname, function () {
+app.listen(port, function () {
   var message = "Server runnning on Port: " + port;
   console.log(message);
 });
