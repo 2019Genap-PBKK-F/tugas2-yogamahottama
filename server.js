@@ -71,6 +71,18 @@ app.get("/api/DataDasar", function(req, res)
   executeQuery(res, query, null, 0);
 });
 
+app.get("/api/DataDasar/nama", function(req, res)
+{
+  var query = 'select id,nama as name from DataDasar'
+  executeQuery(res, query, null, 0);
+})
+
+app.get("/api/DataDasar/:id",function(req, res)
+{
+    var query = "select * from DataDasar where id=" + req.params.id;
+    executeQuery(res, query, null, 0);
+});
+
 app.get("/api/KategoriUnit", function(req, res)
 {
   var query = "select * from KategoriUnit";
@@ -108,6 +120,7 @@ app.post("/api/mahasiswa", function(req, res)
 app.post("/api/DataDasar", function(req,res)
 {
   var param = [
+    { name: 'id', sqltype: sql.Int, value: req.body.id },
     { name: 'nama', sqltype: sql.VarChar, value: req.body.nama }
   ]
 
