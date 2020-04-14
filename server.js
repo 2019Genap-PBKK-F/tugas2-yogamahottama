@@ -95,11 +95,23 @@ app.get("/api/KategoriUnit/:id", function(req, res)
     executeQuery(res, query, null, 0);
 });
 
-app.get("/api/Unit", function(req, res)
+app.get("/api/Unit/", function(req, res)
 {
-  var query = "select * from Unit";
-  executeQuery(res, query, null, 0);
+    var query = "select * from Unit"
+    executeQuery(res, query, null, 0);
 });
+
+app.get("/api/Unit/:id", function(req, res)
+{
+    var query = "select * from Unit where id=" + req.params.id;
+    executeQuery(res, query, null, 0);
+});
+
+app.get("/api/NamaUnit", function(req, res)
+{
+  var query = "select id, nama as name from Unit";
+  executeQuery(res, query, null, 0);
+})
 
 app.get("/api/Capaian_Unit", function(req, res)
 {
@@ -154,6 +166,17 @@ app.post("/api/Unit", function(req,res)
   executeQuery(res, query, param, 1)
 })
 
+app.post("/api/Unit/", function(req, res)
+{
+  var model = [
+    { name: 'nama', sqltype: sql.VarChar, value: req.body.nama},
+    { name: 'KategoriUnit_id', sqltype: sql.Int, value: req.body.KategoriUnit_id }     
+  ]
+
+  var query = 'insert into Unit ( nama, KategoriUnit_id ) values( @nama, @KategoriUnit_id )';
+  executeQuery(res, query, model, 1)
+})
+
 app.post("/api/Capaian_Unit", function(req, res)
 {
   var param = [
@@ -204,16 +227,16 @@ app.post("/api/KategoriUnit/:id", function( req, res)
   executeQuery(res, query, model, 1)
 })
 
-app.put('/api/Unit/:id',function(req,res){
-  var param = [
+app.put("/api/Unit/:id", function(req, res) {
+  var model = [
     { name: 'id', sqltype: sql.Int, value: req.body.id },
-    { name: 'nama', sqltype: sql.VarChar, value: req.body.nama }, 
+    { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
     { name: 'KategoriUnit_id', sqltype: sql.Int, value: req.body.KategoriUnit_id }
   ]
 
-  var query = "update Unit set nama = @nama, KategoriUnit_id = @KategoriUnit_id WHERE id =" + req.params.id;
-  executeQuery(res,query, param, 1);
-});
+  var query = 'update Unit set nama = @nama, KategoriUnit_id = @KategoriUnit_id where id = @id';
+  executeQuery(res, query, model, 1)
+})
 
 app.put('/api/Capaian_Unit/:DataDasar_id&Unit_id',function(req,res){
   var param = [
