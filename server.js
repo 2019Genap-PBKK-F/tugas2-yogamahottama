@@ -55,7 +55,7 @@ var executeQuery = function(res, query, model, reqType) {
 
 app.get("/",function(req, res)
 {
-  // res.end('45 Butuh Pelukan')
+  // res.end('Tugas pbkk')
   res.sendFile(__dirname + '/index.html')
 })
 
