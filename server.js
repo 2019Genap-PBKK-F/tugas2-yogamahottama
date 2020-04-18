@@ -1,8 +1,8 @@
 const express = require("express")
 const app = express()
 const sql = require('mssql')
-var http = require('http');
-const hostname = '10.199.14.46';
+const hostname = 'localhost'
+//const hostname = '10.199.14.46';
 const port = 8028;
 
 //CORS Middleware
@@ -442,5 +442,7 @@ app.get("/api/logindikatorsatker", function(req, res){
 
 //  LISTEN
 
-var httpServer = http.createServer(app);
-httpServer.listen(port,hostname);
+app.listen(port, hostname, function () {
+  var message = "Server runnning on Port: " + port;
+  console.log(message);
+});
