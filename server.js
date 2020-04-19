@@ -200,34 +200,37 @@ app.get("/api/masterindikator/", function(req, res)
 
 app.post("/api/masterindikator/", function(req, res)
 {
-  var model = [
+  var param = [
     { name: 'id_penyebut', sqltype: sql.Int, value: req.body.id_penyebut },
     { name: 'id_pembilang', sqltype: sql.Int, value: req.body.id_pembilang },
     { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
     { name: 'deskripsi', sqltype: sql.VarChar, value: req.body.deskripsi },
     { name: 'default_bobot', sqltype: sql.Float, value: req.body.default_bobot },
+    { name: 'create_date', sqltype: sql.DateTime, value: req.body.create_date },
+    { name: 'last_update', sqltype: sql.DateTime, value: req.body.last_update },
     { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
   ]
 
-  var query = "insert into MasterIndikator( id_penyebut, id_pembilang, nama, deskripsi, default_bobot, create_date, last_update, expired_date ) "
-              + "values( @id_penyebut, @id_pembilang, @nama, @deskripsi, @default_bobot, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @expired_date)"
-  executeQuery(res, query, model, 1)
+  var query = 'insert into MasterIndikator ( id_penyebut, id_pembilang, nama, deskripsi, default_bobot, create_date, last_update, expired_date ) values( @id_penyebut, @id_pembilang, @nama, @deskripsi, @default_bobot, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @expired_date)';
+  executeQuery(res, query, param, 1)
 })
 
 app.put("/api/masterindikator/:id", function(req, res)
 {
-  var model = [
+  var param = [
     { name: 'id', sqltype: sql.Int, value: req.body.id },
     { name: 'id_penyebut', sqltype: sql.Int, value: req.body.id_penyebut },
     { name: 'id_pembilang', sqltype: sql.Int, value: req.body.id_pembilang },
     { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
     { name: 'deskripsi', sqltype: sql.VarChar, value: req.body.deskripsi },
-    { name: 'default_bobot', sqltype: sql.Float, value: req.body.default_bobot }
+    { name: 'default_bobot', sqltype: sql.Float, value: req.body.default_bobot },
+    { name: 'create_date', sqltype: sql.DateTime, value: req.body.create_date },
+    { name: 'last_update', sqltype: sql.DateTime, value: req.body.last_update },
+    { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
   ]
 
-  var query = "update MasterIndikator set id_penyebut = @id_penyebut, id_pembilang = @id_pembilang, nama = @nama, deskripsi = @deskripsi, "
-              + "default_bobot = @default_bobot, last_update = CURRENT_TIMESTAMP where id = @id"
-  executeQuery(res, query, model, 1)
+  var query = "update MasterIndikator set id_penyebut = @id_penyebut, id_pembilang = @id_pembilang, nama = @nama, deskripsi = @deskripsi, default_bobot = @default_bobot, create_date = CURRENT_TIMESTAMP, last_update = CURRENT_TIMESTAMP, expired_date = @expired_date WHERE id =" + req.params.id;
+  executeQuery(res,query, param, 1);
 })
 
 app.delete("/api/masterindikator/:id", function(req, res)
@@ -295,33 +298,36 @@ app.get("/api/satuankerja/", function(req, res)
 
 app.post("/api/satuankerja/", function(req, res)
 {
-  var model = [
+  var param = [
     { name: 'id', sqltype: sql.UniqueIdentifier, value: req.body.id },
-    { name: 'id_jns_satker', sqltype: sql.Numeric, value: req.body.id_jns_satker },
-    { name: 'id_induk_satker', sqltype: sql.UniqueIdentifier, value: req.body.id_induk_satker },
+    { name: 'id_jns_satker', sqltype: sql.Int, value: req.body.id_jns_satker },
+    { name: 'id_induk_satker', sqltype: sql.VarChar, value: req.body.id_induk_satker },
     { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
-    { name: 'email', sqltype: sql.VarBinary, value: req.body.email },
+    { name: 'email', sqltype: sql.VarChar, value: req.body.email },
+    { name: 'create_date', sqltype: sql.DateTime, value: req.body.create_date },
+    { name: 'last_update', sqltype: sql.DateTime, value: req.body.last_update },
     { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
   ]
 
-  var query = "insert into SatuanKerja values( @id, @id_jns_satker, @id_induk_satker, @nama, @email, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @expired_date)"
-  executeQuery(res, query, model, 1)
+  var query = 'insert into SatuanKerja ( id, id_jns_satker, id_induk_satker, nama, email, create_date, last_update, expired_date ) values( @id, @id_jns_satker, @id_induk_satker, @nama, @email, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @expired_date )';
+  executeQuery(res, query, param, 1)
 })
 
 app.put("/api/satuankerja/:id", function(req, res)
 {
-  var model = [
+  var param = [
     { name: 'id', sqltype: sql.UniqueIdentifier, value: req.body.id },
-    { name: 'id_jns_satker', sqltype: sql.Numeric, value: req.body.id_jns_satker },
-    { name: 'id_induk_satker', sqltype: sql.UniqueIdentifier, value: req.body.id_induk_satker },
+    { name: 'id_jns_satker', sqltype: sql.Int, value: req.body.id_jns_satker },
+    { name: 'id_induk_satker', sqltype: sql.VarChar, value: req.body.id_induk_satker },
     { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
-    { name: 'email', sqltype: sql.VarBinary, value: req.body.email },
-    { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
+    { name: 'email', sqltype: sql.VarChar, value: req.body.email },
+    { name: 'create_date', sqltype: sql.Char, value: req.body.create_date },
+    { name: 'last_update', sqltype: sql.Char, value: req.body.last_update },
+    { name: 'expired_date', sqltype: sql.Char, value: req.body.expired_date }
   ]
 
-  var query = "update SatuanKerja set id_jns_satker = @id_jns_satker, id_induk_satker = @id_induk_satker, nama = @nama, email = @email, last_update = CURRENT_TIMESTAMP " +
-              "where id = @id"
-  executeQuery(res, query, model, 1)
+  var query = "update SatuanKerja set id_jns_satker = @id_jns_satker, id_induk_satker = @id_induk_satker, nama = @nama, email = @email, create_date = CURRENT_TIMESTAMP, last_update = CURRENT_TIMESTAMP, expired_date = @expired_date WHERE id ='" + req.params.id + "'";
+  executeQuery(res,query, param, 1);
 })
 
 app.delete("/api/satuankerja/:id", function(req, res)
@@ -344,14 +350,15 @@ app.get("/api/capaianunit/",function(req, res)
 
 app.post("/api/capaianunit/", function(req, res)
 {
-  var model = [
+  var param = [
     { name: 'id_satker', sqltype: sql.UniqueIdentifier, value: req.body.id_satker },
     { name: 'id_datadasar', sqltype: sql.Int, value: req.body.id_datadasar },
+    { name: 'waktu', sqltype: sql.Char, value: req.body.waktu },
     { name: 'capaian', sqltype: sql.Float, value: req.body.capaian }
   ]
 
-  var query = "insert into Capaian_Unit values( @id_satker, @id_datadasar, @capaian, CURRENT_TIMESTAMP )"
-  executeQuery(res, query, model, 1)
+  var query = 'insert into Capaian_Unit ( id_satker, id_datadasar, waktu, capaian ) values( @id_satker, @id_datadasar, CURRENT_TIMESTAMP, @capaian )';
+  executeQuery(res, query, param, 1)
 })
 
 app.put("/api/capaianunit/:id&:id2", function(req, res)
