@@ -449,58 +449,54 @@ app.delete("/api/satuankerja/:id", function(req, res)
    executeQuery(res, query, model, 1)
 })
 
-//Indikator Satuan Kerja
+///////////////////////\\\\\\\\\\\\\\\\\\\\\\\\
+//////////////////Capaian Unit\\\\\\\\\\\\\\\\\\ 
 
-app.get("/api/indikatorsatuankerja/", function(req, res)
+//Select
+app.get("/api/capaian-unit/",function(req, res)
 {
-  var query = "select * from Indikator_SatuanKerja"
-  executeQuery(res, query, null, 0)
+   var query = "select * from Capaian_Unit"
+   executeQuery(res, query, null, 0)
 })
 
-app.post("/api/indikatorsatuankerja/", function(req, res)
+//Insert
+app.post("/api/capaian-unit/", function(req, res)
 {
-  var model = [
-    { name: 'id_periode', sqltype: sql.Numeric, value: req.body.id_periode },
-    { name: 'id_master', sqltype: sql.Int, value: req.body.id_master },
-    { name: 'id_satker', sqltype: sql.UniqueIdentifier, value: req.body.id_satker },
-    { name: 'bobot', sqltype: sql.Float, value: req.body.bobot },
-    { name: 'target', sqltype: sql.Float, value: req.body.target },
-    { name: 'capaian', sqltype: sql.Float, value: req.body.capaian }
-  ]
+   var model = [
+      { name: 'id_satker', sqltype: sql.UniqueIdentifier, value: req.body.id_satker },
+      { name: 'id_datadasar', sqltype: sql.Int, value: req.body.id_datadasar },
+      { name: 'capaian', sqltype: sql.Float, value: req.body.capaian }
+   ]
 
-  var query = "insert into Indikator_SatuanKerja values( @id_periode, @id_master, @id_satker, @bobot, @target, @capaian, CURRENT_TIMESTAMP"
-  executeQuery(res, query, model, 1)
+   var query = "insert into Capaian_Unit values( @id_satker, @id_datadasar, CURRENT_TIMESTAMP, @capaian )"
+   executeQuery(res, query, model, 1)
 })
 
-app.put("/api/indikatorsatuankerja/:id&:id2&:id3", function(req, res)
+//Update
+app.put("/api/capaian-unit/:id&:id2", function(req, res)
 {
-  var model = [
-    { name: 'id_periode', sqltype: sql.Numeric, value: req.body.id_periode },
-    { name: 'id_master', sqltype: sql.Int, value: req.body.id_master },
-    { name: 'id_satker', sqltype: sql.UniqueIdentifier, value: req.body.id_satker },
-    { name: 'bobot', sqltype: sql.Float, value: req.body.bobot },
-    { name: 'target', sqltype: sql.Float, value: req.body.target },
-    { name: 'capaian', sqltype: sql.Float, value: req.body.capaian },
-    { name: 'id', sqltype: sql.Numeric, value: req.params.id },
-    { name: 'id2', sqltype: sql.Int, value: req.params.id2 },
-    { name: 'id3', sqltype: sql.UniqueIdentifier, value: req.params.id3 }
-  ]
+   var model = [
+      { name: 'id_satker', sqltype: sql.UniqueIdentifier, value: req.body.id_satker },
+      { name: 'id_datadasar', sqltype: sql.Int, value: req.body.id_datadasar },
+      { name: 'capaian', sqltype: sql.Float, value: req.body.capaian },
+      { name: 'id', sqltype: sql.UniqueIdentifier, value: req.params.id },
+      { name: 'id2', sqltype: sql.Int, value: req.params.id2 }
+   ]
 
-  var query = "update Indikator_SatuanKerja set id_periode = @id_periode, id_master = @id_master, id_satker = @id_satker, bobot = @bobot, target = @target " +
-              "capaian = @capaian, last_update = CURRENT_TIMESTAMP where id_periode = @id and id_master = @id2 and id_satker = @id3"
-  executeQuery(res, query, model, 1)
+   var query = "update Capaian_Unit set id_satker = @id_satker, id_dasar = @id_dasar, capaian = @capaian where id_satker = @id and id_datadasar = @id2"
+   executeQuery(res, query, model, 1)
 })
 
-app.delete("/api/indikatorsatuankerja/:id&:id2&:id3", function(req, res)
+//Delete
+app.delete("/api/capaiam-unit/:id&:id2", function(req, res)
 {
-  var model = [
-    { name: 'id_periode', sqltype: sql.Numeric, value: req.params.id },
-    { name: 'id_master', sqltype: sql.Int, value: req.params.id2 },
-    { name: 'id_satker', sqltype: sql.UniqueIdentifier, value: req.params.id3 }
-  ]
+   var model = [
+      { name: 'id', sqltype: sql.UniqueIdentifier, value: req.params.id },
+      { name: 'id2', sqltype: sql.Int, value: req.params.id2 }
+   ]
 
-  var query = "delete from Indikator_SatuanKerja where id_periode = @id_periode and id_master = @id_master and id_satker = @id_satker"
-  executeQuery(res, query, model, 1)
+   var query = "delete from Capaian_Unit where id_satker = @id and id_datadasar = @id2"
+   executeQuery(re, query, model, 1)
 })
 
 //Log Indikator Satuan Kerja
