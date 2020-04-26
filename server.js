@@ -389,50 +389,64 @@ app.delete("/api/indikator-periode/:id&:id2", function(req, res)
    executeQuery(res, query, model, 1)
 })
 
-//Capaian Unit
+///////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
+///////////////////Satuan Kerja\\\\\\\\\\\\\\\\\\ 
 
-app.get("/api/capaianunit/",function(req, res)
+//Select
+app.get("/api/satuankerja/", function(req, res)
 {
-    var query = "select * from Capaian_Unit"
-    executeQuery(res, query, null, 0)
+   var query = "select * from SatuanKerja"
+   executeQuery(res, query, null, 0)
 })
 
-app.post("/api/capaianunit/", function(req, res)
+app.get("/api/satuankerja/nama", function(req, res)
 {
-  var param = [
-    { name: 'id_satker', sqltype: sql.UniqueIdentifier, value: req.body.id_satker },
-    { name: 'id_datadasar', sqltype: sql.Int, value: req.body.id_datadasar },
-    { name: 'waktu', sqltype: sql.Char, value: req.body.waktu },
-    { name: 'capaian', sqltype: sql.Float, value: req.body.capaian }
-  ]
-
-  var query = 'insert into Capaian_Unit ( id_satker, id_datadasar, waktu, capaian ) values( @id_satker, @id_datadasar, CURRENT_TIMESTAMP, @capaian )';
-  executeQuery(res, query, param, 1)
+   var query = "select id,nama as name from SatuanKerja"
+   executeQuery(res, query, null, 0)
 })
 
-app.put("/api/capaianunit/:id&:id2", function(req, res)
+//Insert
+app.post("/api/satuankerja/", function(req, res)
 {
-  var model = [
-    { name: 'id_satker', sqltype: sql.UniqueIdentifier, value: req.body.id_satker },
-    { name: 'id_datadasar', sqltype: sql.Int, value: req.body.id_datadasar },
-    { name: 'capaian', sqltype: sql.Float, value: req.body.capaian },
-    { name: 'id', sqltype: sql.UniqueIdentifier, value: req.params.id },
-    { name: 'id2', sqltype: sql.Int, value: req.params.id2 }
-  ]
+   var model = [
+      { name: 'id', sqltype: sql.VarChar, value: req.body.id },
+      { name: 'id_jns_satker', sqltype: sql.Numeric, value: req.body.id_jns_satker },
+      { name: 'id_induk_satker', sqltype: sql.VarChar, value: req.body.id_induk_satker },
+      { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
+      { nama: 'email', sqltype: sql.VarBinary, value: req.body.email },
+      { nama: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
+   ]   
 
-  var query = "update Capaian_Unit set id_satker = @id_satker, id_dasar = @id_dasar, capaian = @capaian where id_satker = @id and id_datadasar = @id2"
-  executeQuery(res, query, model, 1)
+   var query = "insert into SatuanKerja values( @id, @id_jns_satker, @id_induk_satker, @nama, @email, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @expired_date)"
+   executeQuery(res, query, model, 1)
 })
 
-app.delete("/api/capaianunit/:id&:id2", function(req, res)
+//Update
+app.put("/api/satuankerja/:id", function(req, res)
 {
-  var model = [
-    { name: 'id_satker', sqltype: sql.UniqueIdentifier, value: req.params.id },
-    { name: 'id_datadasar', sqltype: sql.Int, value: req.params.id2 }
-  ]
+   var model = [
+      { name: 'id', sqltype: sql.VarChar, value: req.params.id },
+      { name: 'id_jns_satker', sqltype: sql.Numeric, value: req.body.id_jns_satker },
+      { name: 'id_induk_satker', sqltype: sql.VarChar, value: req.body.id_induk_satker },
+      { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
+      { nama: 'email', sqltype: sql.VarBinary, value: req.body.email },
+      { nama: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
+   ]
 
-  var query = "delete from Capaian_Unit where id_satker = @id and id_datadasar = @id2"
-  executeQuery(re, query, model, 1)
+   var query = "update SatuanKerja set id_jns_satker = @id_jns_satker, id_induk_satker = @id_induk_satker, nama = @nama, email = @email, last_update = CURRENT_TIMESTAMP " +
+               "where id = @id"
+   executeQuery(res, query, model, 1)
+})
+
+//Delete
+app.delete("/api/satuankerja/:id", function(req, res)
+{
+   var model = [
+      { name: 'id', sqltype: sql.UniqueIdentifier, value: req.params.id }
+   ]
+
+   var query = "delete from SatuanKerja where id = @id"
+   executeQuery(res, query, model, 1)
 })
 
 //Indikator Satuan Kerja
