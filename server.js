@@ -294,15 +294,15 @@ app.post("/api/masterindikator/", function(req, res)
   var model = [
       { name: 'id', sqltype: sql.Int, value: req.body.id },
       { name: 'id_aspek', sqltype: sql.Int, value: req.body.id_aspek },
-      { name: 'id_pembilang', sqltype: sql.Int, value: req.body.id_penyebut },
-      { name: 'id_penyebut', sqltype: sql.Int, value: req.body.id_pembilang },
+      { name: 'id_penyebut', sqltype: sql.Int, value: req.body.id_penyebut },
+      { name: 'id_pembilang', sqltype: sql.Int, value: req.body.id_pembilang },
       { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
       { name: 'deskripsi', sqltype: sql.VarChar, value: req.body.deskripsi },
       { name: 'default_bobot', sqltype: sql.Float, value: req.body.default_bobot },
       { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
    ]
 
-   var query = "insert into MasterIndikator( id_aspek, id_pembilang, id_penyebut, nama, deskripsi, default_bobot, create_date, last_update, expired_date )"
+   var query = "insert into MasterIndikator( id_aspek, id_penyebut, id_pembilang, nama, deskripsi, default_bobot, create_date, last_update, expired_date )"
                + "values ( @id_aspek, @id_pembilang, @id_penyebut, @nama, @deskripsi, @default_bobot, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @expired_date)"
    executeQuery(res, query, model, 1)
 })
@@ -313,15 +313,15 @@ app.put("/api/masterindikator/:id", function(req, res)
    var model = [
       { name: 'id', sqltype: sql.Int, value: req.body.id },
       { name: 'id_aspek', sqltype: sql.Int, value: req.body.id_aspek },
-      { name: 'id_pembilang', sqltype: sql.Int, value: req.body.id_penyebut },
-      { name: 'id_penyebut', sqltype: sql.Int, value: req.body.id_pembilang },
+      { name: 'id_penyebut', sqltype: sql.Int, value: req.body.id_penyebut },
+      { name: 'id_pembilang', sqltype: sql.Int, value: req.body.id_pembilang },
       { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
       { name: 'deskripsi', sqltype: sql.VarChar, value: req.body.deskripsi },
       { name: 'default_bobot', sqltype: sql.Float, value: req.body.default_bobot },
       { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
    ]
 
-   var query = "update MasterIndikator set id_aspek = @id_aspek, id_pembilang = @id_pembilang, id_penyebut = @id_penyebut, nama = @nama, deskripsi = @deskripsi," 
+   var query = "update MasterIndikator set id_aspek = @id_aspek, id_penyebut = @id_penyebut, id_pembilang = @id_pembilang, nama = @nama, deskripsi = @deskripsi," 
                + " default_bobot = @default_bobot, expired_date = @expired_date, last_update = CURRENT_TIMESTAMP where id = @id"
    executeQuery(res, query, model, 1)
 })
