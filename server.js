@@ -109,46 +109,64 @@ app.delete("/api/datadasar/:id", function(req, res)
    executeQuery(res, query, model, 1)
 })
 
-//Jenis SatKer 
+///////////////////////\\\\\\\\\\\\\\\\\\
+///////////////////Aspek\\\\\\\\\\\\\\\\\\
 
-app.get("/api/jenissatker/", function(req, res)
+//Select
+app.get("/api/aspekk/", function(req, res)
 {
-    var query = "select * from JenisSatker"
-    executeQuery(res, query, null, 0)
+   var query = "select * from Aspek"
+   executeQuery(res, query, null, 0)
 })
 
-app.post("/api/jenissatker/", function(req, res)
+app.get("/api/aspekk/nama", function(req, res)
 {
-  var model = [
-    { name: 'id', sqltype: sql.Numeric, value: req.body.id },
-    { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
-    { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
-  ]
-
-  var query = 'insert into JenisSatker ( id, nama, create_date, last_update, expired_date ) values( @id, @nama, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @expired_date ))'
-  executeQuery(res, query, model, 1)
+   var query = 'select id,aspek as name from Aspek'
+   executeQuery(res, query, null, 0)
 })
 
-app.put("/api/jenissatker/:id", function(req, res)
+app.get("/api/aspekk/:id",function(req, res)
 {
-  var model = [
-    { name: 'id', sqltype: sql.Numeric, value: req.body.id },
-    { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
-  ]
-
-  var query = "update JenisSatker set nama = @nama, last_update = CURRENT_TIMESTAMP where id = @id" 
-  executeQuery(res, query, model, 1)
+   var query = "select * from Aspek where id=" + req.params.id
+   executeQuery(res, query, null, 0)
 })
 
-app.delete("/api/jenissatker/:id", function(req, res)
+//Insert
+app.post("/api/aspekk/", function(req, res)
 {
-  var model = [
-    { name: 'id', sqltype: sql.Numeric, value: req.params.id }
-  ]
+   var model = [
+      { name: 'id', sqltype: sql.Int, value: req.body.id },
+      { name: 'aspek', sqltype: sql.VarChar, value: req.body.aspek },
+      { name: 'komponen_aspek', sqltype: sql.VarChar, value: req.body.komponen_aspek }
+   ]
 
-  var query = "delete from Jenis_Satker where id = @id" 
-  executeQuery(res, query, model, 1)
+   var query = 'insert into Aspek ( aspek, komponen_aspek ) values( @aspek, @komponen_aspek )'
+   executeQuery(res, query, model, 1)
 })
+
+//Update
+app.put("/api/aspekk/:id", function(req, res) {
+   var model = [
+      { name: 'id', sqltype: sql.Int, value: req.body.id },
+      { name: 'aspek', sqltype: sql.VarChar, value: req.body.aspek },
+      { name: 'komponen_aspek', sqltype: sql.VarChar, value: req.body.komponen_aspek }
+   ]
+
+   var query = 'update Aspek set aspek = @aspek, komponen_aspek = @komponen_aspek where id = @id'
+   executeQuery(res, query, model, 1)
+})
+
+//Delete
+app.delete("/api/aspekk/:id", function(req, res)
+{
+   var model = [
+      { name: 'id', sqltype: sql.Int, value: req.params.id }
+   ]
+
+   var query = "delete from Aspek where id = @id"
+   executeQuery(res, query, model, 1)
+})
+
 
 //Periode
 
