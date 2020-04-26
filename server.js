@@ -558,6 +558,15 @@ app.delete("/api/indikator-satuankerja/:id&:id2&:id3", function(req, res)
    executeQuery(res, query, model, 1)
 })
 
+///////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
+///////////////log indikator satker\\\\\\\\\\\\\\
+
+//Select
+app.get("/api/log-indikator-satker", function(req, res){
+  var query = "select * from Indikator_SatuanKerja_Log"
+  executeQuery(res, query, null, 0)
+})
+
 //  LISTEN
 
 app.listen(port, function () {
