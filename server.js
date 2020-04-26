@@ -51,62 +51,62 @@ var executeQuery = function(res, query, model, reqType) {
   })
 }
 
-//Data Dasar
+////////////////////////\\\\\\\\\\\\\\\\\\\\\\\
+///////////////////Data Dasar\\\\\\\\\\\\\\\\\\
 
-app.get("/",function(req, res)
-{
-  // res.end('Tugas pbkk')
-  res.sendFile(__dirname + '/index.html')
-})
-
+//Select
 app.get("/api/datadasar/", function(req, res)
 {
-    var query = "select * from DataDasar"
-    executeQuery(res, query, null, 0)
+   var query = "select * from DataDasar"
+   executeQuery(res, query, null, 0)
 })
 
 app.get("/api/datadasar/nama", function(req, res)
 {
-  var query = 'select id,nama as name from DataDasar'
-  executeQuery(res, query, null, 0)
+   var query = 'select id,nama as name from DataDasar'
+   executeQuery(res, query, null, 0)
 })
 
 app.get("/api/datadasar/:id",function(req, res)
 {
-    var query = "select * from DataDasar where id=" + req.params.id
-    executeQuery(res, query, null, 0)
+   var query = "select * from DataDasar where id=" + req.params.id
+   executeQuery(res, query, null, 0)
 })
 
+//Insert
 app.post("/api/datadasar/", function(req, res)
 {
-  var model = [
-    { name: 'id', sqltype: sql.Int, value: req.body.id },
-    { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
-    { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
-  ]
+   var model = [
+      { name: 'id', sqltype: sql.Int, value: req.body.id },
+      { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
+      { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
+   ]
 
-  var query = 'insert into DataDasar ( nama, create_date, last_update, expired_date ) values( @nama, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @expired_date )'
-  executeQuery(res, query, model, 1)
+   var query = 'insert into DataDasar ( nama, create_date, last_update, expired_date )' + 'values( @nama, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @expired_date )'
+   executeQuery(res, query, model, 1)
 })
 
+//Update
 app.put("/api/datadasar/:id", function(req, res) {
-  var model = [
-    { name: 'id', sqltype: sql.Int, value: req.body.id },
-    { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
-  ]
+   var model = [
+      { name: 'id', sqltype: sql.Int, value: req.params.id },
+      { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
+      { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
+   ]
 
-  var query = 'update DataDasar set nama = @nama, last_update = CURRENT_TIMESTAMP where id = @id'
-  executeQuery(res, query, model, 1)
+   var query = 'update DataDasar set nama = @nama, last_update = CURRENT_TIMESTAMP, expired_date = @expired_date where id = @id'
+   executeQuery(res, query, model, 1)
 })
 
+//Delete
 app.delete("/api/datadasar/:id", function(req, res)
 {
-  var model = [
-    { name: 'id', sqltype: sql.Int, value: req.params.id }
-  ]
+   var model = [
+      { name: 'id', sqltype: sql.Int, value: req.params.id }
+   ]
 
-  var query = "delete from DataDasar where id = @id"
-  executeQuery(res, query, model, 1)
+   var query = "delete from DataDasar where id = @id"
+   executeQuery(res, query, model, 1)
 })
 
 //Jenis SatKer 
