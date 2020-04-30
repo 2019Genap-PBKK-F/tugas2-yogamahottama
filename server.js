@@ -171,20 +171,32 @@ app.delete("/api/aspekk/:id", function(req, res)
 ///////////////////Jenis Satker\\\\\\\\\\\\\\\\\\ 
 
 //Select
-app.get("/api/jenis-satker/", function(req, res)
+app.get("/api/jenissatker/", function(req, res)
 {
    var query = "select * from JenisSatker"
    executeQuery(res, query, null, 0)
 })
 
-app.get("/api/jenis-satker/nama", function(req, res)
+app.get("/api/jenissatker/nama", function(req, res)
 {
    var query = "select id,nama as name from JenisSatker"
    executeQuery(res, query, null, 0)
 })
 
+app.get("/api/jenissatker/id", function(req, res)
+{
+   var query = "select id as code from JenisSatker"
+   executeQuery(res, query, null, 0)
+})
+
+app.get("/api/jenissatker/:id",function(req, res)
+{
+   var query = "select * from JenisSatker where id=" + req.params.id
+   executeQuery(res, query, null, 0)
+})
+
 //Insert
-app.post("/api/jenis-satker/", function(req, res)
+app.post("/api/jenissatker/", function(req, res)
 {
    var model = [
       { name: 'id', sqltype: sql.Numeric, value: req.body.id },
@@ -198,7 +210,7 @@ app.post("/api/jenis-satker/", function(req, res)
 })
 
 //Update
-app.put("/api/jenis-satker/:id", function(req, res)
+app.put("/api/jenissatker/:id", function(req, res)
 {
    var model = [
       { name: 'id', sqltype: sql.Numeric, value: req.params.id },
@@ -211,7 +223,7 @@ app.put("/api/jenis-satker/:id", function(req, res)
 })
 
 //Delete
-app.delete("/api/jenis-satker/:id", function(req, res)
+app.delete("/api/jenissatker/:id", function(req, res)
 {
    var model = [
       { name: 'id', sqltype: sql.Numeric, value: req.params.id }
@@ -389,60 +401,67 @@ app.delete("/api/indikator-periode/:id&:id2", function(req, res)
    executeQuery(res, query, model, 1)
 })
 
-///////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-///////////////////Satuan Kerja\\\\\\\\\\\\\\\\\\ 
+///////////////////////\\\\\\\\\\\\\\\\\\\\\\\\
+//////////////////Satuan Kerja\\\\\\\\\\\\\\\\\\ 
 
 //Select
-app.get("/api/satuankerja/", function(req, res)
+app.get("/api/satker/", function(req, res)
 {
    var query = "select * from SatuanKerja"
    executeQuery(res, query, null, 0)
 })
 
-app.get("/api/satuankerja/nama", function(req, res)
+app.get("/api/satker/nama", function(req, res)
 {
-   var query = "select id,nama as name from SatuanKerja"
+   var query = 'select id,nama as name from SatuanKerja'
+   executeQuery(res, query, null, 0)
+})
+
+app.get("/api/satker/:id",function(req, res)
+{
+   var query = "select * from SatuanKerja where id=" + req.params.id
    executeQuery(res, query, null, 0)
 })
 
 //Insert
-app.post("/api/satuankerja/", function(req, res)
+app.post("/api/satker/", function(req, res)
 {
-   var model = [
-      { name: 'id', sqltype: sql.VarChar, value: req.body.id },
+  var model = [
+      { name: 'id', sqltype: sql.Int, value: req.body.id },
+      { name: 'id_satker', sqltype: sql.VarChar, value: req.body.id_satker },
       { name: 'id_jns_satker', sqltype: sql.Numeric, value: req.body.id_jns_satker },
       { name: 'id_induk_satker', sqltype: sql.VarChar, value: req.body.id_induk_satker },
       { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
-      { nama: 'email', sqltype: sql.VarBinary, value: req.body.email },
-      { nama: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
-   ]   
+      { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
+   ]
 
-   var query = "insert into SatuanKerja values( @id, @id_jns_satker, @id_induk_satker, @nama, @email, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @expired_date)"
+   var query = "insert into SatuanKerja ( id_satker, id_jns_satker, id_induk_satker, nama, create_date, last_update, expired_date )"
+               + "values ( @id_satker, @id_jns_satker, @id_induk_satker, @nama, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @expired_date)"
    executeQuery(res, query, model, 1)
 })
 
 //Update
-app.put("/api/satuankerja/:id", function(req, res)
+app.put("/api/satker/:id", function(req, res)
 {
    var model = [
-      { name: 'id', sqltype: sql.VarChar, value: req.params.id },
+      { name: 'id', sqltype: sql.Int, value: req.body.id },
+      { name: 'id_satker', sqltype: sql.VarChar, value: req.body.id_satker },
       { name: 'id_jns_satker', sqltype: sql.Numeric, value: req.body.id_jns_satker },
       { name: 'id_induk_satker', sqltype: sql.VarChar, value: req.body.id_induk_satker },
       { name: 'nama', sqltype: sql.VarChar, value: req.body.nama },
-      { nama: 'email', sqltype: sql.VarBinary, value: req.body.email },
-      { nama: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
+      { name: 'expired_date', sqltype: sql.DateTime, value: req.body.expired_date }
    ]
 
-   var query = "update SatuanKerja set id_jns_satker = @id_jns_satker, id_induk_satker = @id_induk_satker, nama = @nama, email = @email, last_update = CURRENT_TIMESTAMP " +
-               "where id = @id"
+   var query = "update SatuanKerja set id_satker = @id_satker, id_jns_satker = @id_jns_satker, id_induk_satker = @id_induk_satker, nama = @nama," 
+               + " expired_date = @expired_date, last_update = CURRENT_TIMESTAMP where id = @id"
    executeQuery(res, query, model, 1)
 })
 
 //Delete
-app.delete("/api/satuankerja/:id", function(req, res)
+app.delete("/api/satker/:id", function(req, res)
 {
    var model = [
-      { name: 'id', sqltype: sql.UniqueIdentifier, value: req.params.id }
+      { name: 'id', sqltype: sql.Int, value: req.params.id }
    ]
 
    var query = "delete from SatuanKerja where id = @id"
