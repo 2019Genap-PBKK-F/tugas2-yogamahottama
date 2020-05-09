@@ -586,6 +586,34 @@ app.get("/api/log-indikator-satker", function(req, res){
   executeQuery(res, query, null, 0)
 })
 
+// Dosen
+app.get("/api/Dosen", function(req, res)
+{
+  var query = "select * from Dosen";
+  executeQuery(res, query, null, 0);
+});
+
+// Penelitian
+app.get("/api/Penelitian", function(req, res)
+{
+  var query = "select * from Penelitian";
+  executeQuery(res, query, null, 0);
+});
+
+// Abmas
+app.get("/api/Abmas", function(req, res)
+{
+  var query = "select * from Abmas";
+  executeQuery(res, query, null, 0);
+});
+
+// Publikasi
+app.get("/api/Publikasi", function(req, res)
+{
+  var query = "select * from Publikasi";
+  executeQuery(res, query, null, 0);
+});
+
 //  LISTEN
 
 app.listen(port, function () {
