@@ -97,9 +97,9 @@ app.get("/api/Aspek", function(req, res)
 app.post("/api/Aspek", function(req, res)
 {
   var param = [
-    { name: 'id', sqltype: sql.Int, value: req.body.id },
     { name: 'aspek', sqltype: sql.VarChar, value: req.body.aspek },
-    { name: 'komponen_aspek', sqltype: sql.VarChar, value: req.body.komponen_aspek }
+    { name: 'komponen_aspek', sqltype: sql.VarChar, value: req.body.komponen_aspek },
+    { name: 'id', sqltype: sql.Int, value: req.body.id }
   ]
 
   var query = 'insert into Aspek ( aspek, komponen_aspek ) values( @aspek, @komponen_aspek )';
@@ -108,9 +108,9 @@ app.post("/api/Aspek", function(req, res)
 
 app.put('/api/Aspek/:id',function(req,res){
   var param = [
-    { name: 'id', sqltype: sql.Int, value: req.body.id },
     { name: 'aspek', sqltype: sql.VarChar, value: req.body.aspek },
-    { name: 'komponen_aspek', sqltype: sql.VarChar, value: req.body.komponen_aspek }
+    { name: 'komponen_aspek', sqltype: sql.VarChar, value: req.body.komponen_aspek },
+    { name: 'id', sqltype: sql.Int, value: req.body.id }
   ]
 
   var query = "update Aspek set aspek = @aspek, komponen_aspek = @komponen_aspek WHERE id =" + req.params.id;
