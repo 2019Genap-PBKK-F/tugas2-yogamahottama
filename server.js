@@ -51,7 +51,7 @@ var executeQuery = function(res, query, param, reqType) {
 
 app.get("/",function(req, res)
 {
-  res.end('Hello World');
+  res.sendFile(__dirname + '/index.html')
 });
 
 ////////\\\\\\\
